@@ -14,6 +14,7 @@ std::vector<Pt> cgal_hull(const std::vector<Pt>& P) {
     std::vector<Pt> H;
     for (auto& q : out) H.push_back({(long long)q.x(), (long long)q.y()});
     // TODO: rotate H so that it starts at the lowest point (our output convention)
+    std::rotate(H.begin(), std::min_element(H.begin(), H.end()), H.end());
     return H;
 }
 
@@ -23,7 +24,13 @@ int main() {
         for (std::string d : {"square", "disk", "parabola"}) {
             int n = 1 + seed % 300;
             auto P = gen(d, n, seed);
-            // TODO: also test inputs with duplicates and collinear points (see Part 3)
+            // Casos complicados para los tests de estrés: duplicados, colineales, puntos en aristas, interiores...
+            if (seed % 3 == 1) {
+                size_t k = std::min<size_t>(5, P.size());
+                for (size_t i = 0; i < k; i++) P.push_back(P[i]);
+            } else if (seed % 3 == 2) {
+                for (long long k = 0; k <= 4; k++) P.push_back({-1000 + 500 * k, -1000000000LL});
+            }
             auto C = cgal_hull(P);
             if (graham(P) != C || jarvis(P) != C) {
                 if (++failures <= 5) std::cout << "mismatch: dist=" << d << " n=" << n << " seed=" << seed << "\n";
