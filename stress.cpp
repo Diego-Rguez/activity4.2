@@ -13,7 +13,7 @@ std::vector<Pt> cgal_hull(const std::vector<Pt>& P) {
     CGAL::convex_hull_2(in.begin(), in.end(), std::back_inserter(out));
     std::vector<Pt> H;
     for (auto& q : out) H.push_back({(long long)q.x(), (long long)q.y()});
-    // TODO: rotate H so that it starts at the lowest point (our output convention)
+    // rotate H so that it starts at the lowest point (our output convention)
     std::rotate(H.begin(), std::min_element(H.begin(), H.end()), H.end());
     return H;
 }
@@ -24,7 +24,7 @@ int main() {
         for (std::string d : {"square", "disk", "parabola"}) {
             int n = 1 + seed % 300;
             auto P = gen(d, n, seed);
-            // Casos complicados para los tests de estrés: duplicados, colineales, puntos en aristas, interiores...
+            // Hard cases for the stress test: duplicated points and collinear points on an edge
             if (seed % 3 == 1) {
                 size_t k = std::min<size_t>(5, P.size());
                 for (size_t i = 0; i < k; i++) P.push_back(P[i]);

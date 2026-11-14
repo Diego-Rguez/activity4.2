@@ -55,7 +55,6 @@ static const std::vector<TestCase> CASES = {
     {"square_degenerate.txt", {{0, 0}, {4, 0}, {4, 4}, {0, 4}},                            "duplicados, puntos en aristas, interiores"},
     {"collinear.txt",         {{0, 0}, {3, 3}},                                            "todos colineales + duplicado"},
     {"single.txt",            {{7, -2}},                                                   "n = 1"},
-    // TODO (opcional): agreguen sus propios casos aquí, p. ej. n = 0, n = 2, todos iguales...
 };
 
 // Corre un algoritmo sobre todos los casos. Regresa cuántos fallaron.
@@ -105,7 +104,6 @@ int main(int argc, char** argv) {
         Pt a{0, 0}, b{1, 0}, c{0, 1};
         bool ok = orient(a, b, c) > 0 && orient(a, c, b) < 0 && orient(a, b, {2, 0}) == 0;
         std::cout << "[" << (ok ? " OK " : "FAIL") << "] orient() izquierda/derecha/colineal\n";
-        // TODO (Q1.1): agreguen un caso con coordenadas en ±1e9 para el peor caso de overflow
     }
 
     int fails = 0;
