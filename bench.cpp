@@ -26,9 +26,24 @@ int main() {
             size_t h = 0;
             double t = time_ms([&] { h = graham(P).size(); });
             std::cout << d << "," << n << "," << h << ",graham," << t << ",\n";
-            // TODO: time your jarvis (print the number of orientation tests too).
-            //       Skip it when n*h is so large that it would take more than a few seconds.
-            // TODO: time CGAL::convex_hull_2, CGAL::ch_graham_andrew and CGAL::ch_jarvis
-            //       (use std::back_inserter into a std::vector<P2>).
+            // Jarvis costs about n*h steps, so we skip both versions when that gets too big
+            bool run_jarvis = (long long)n * h <= 2000000000LL;
+            if (run_jarvis) {
+                long long tests = 0;
+                t = time_ms([&] { jarvis(P, &tests); });
+                std::cout << d << "," << n << "," << h << ",jarvis," << t << "," << tests << "\n";
+            }
+
+            // CGAL versions, each one writes its hull into a fresh vector
+            t = time_ms([&] { std::vector<P2> out; CGAL::convex_hull_2(in.begin(), in.end(), std::back_inserter(out)); });
+            std::cout << d << "," << n << "," << h << ",cgal_default," << t << ",\n";
+
+            t = time_ms([&] { std::vector<P2> out; CGAL::ch_graham_andrew(in.begin(), in.end(), std::back_inserter(out)); });
+            std::cout << d << "," << n << "," << h << ",cgal_graham_andrew," << t << ",\n";
+
+            if (run_jarvis) {
+                t = time_ms([&] { std::vector<P2> out; CGAL::ch_jarvis(in.begin(), in.end(), std::back_inserter(out)); });
+                std::cout << d << "," << n << "," << h << ",cgal_jarvis," << t << ",\n";
+            }
         }
 }
