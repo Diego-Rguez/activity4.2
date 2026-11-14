@@ -19,7 +19,8 @@ inline bool operator<(const Pt& a, const Pt& b) { return a.y < b.y || (a.y == b.
 //  = 0 : collinear
 // Assume |x|, |y| <= 1e9. Is long long enough? Justify in your report.
 inline long long orient(const Pt& a, const Pt& b, const Pt& c) {
-    return 0; // TODO
+    long long result = (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
+    return result;
 }
 
 inline long long dist2(const Pt& a, const Pt& b) {
