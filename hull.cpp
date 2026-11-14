@@ -25,7 +25,28 @@ std::vector<Pt> graham(std::vector<Pt> P) {
 }
 
 std::vector<Pt> jarvis(std::vector<Pt> P, long long* tests) {
+    std::sort(P.begin(), P.end());
+    P.erase(std::unique(P.begin(), P.end()), P.end());
+    if (P.size() < 3) return P;
     // start at the lowest point; from the current point choose the candidate such that
     // every other point is to its LEFT (use orient); on ties keep the farthest point
-    return {}; // TODO
+    Pt start = P[0];
+    Pt current = start;
+    std::vector<Pt> H = {};
+    long long cnt = 0;
+    do {
+        H.push_back(current);
+        Pt next = P[1]; // candidate for the next point in the hull
+        for (const Pt& p : P) {
+            if (p == current) continue;
+            long long o = orient(current, next, p);
+            cnt++;
+            if (o < 0 || (o == 0 && dist2(current, p) > dist2(current, next))) {
+                next = p;
+            }
+        }
+        current = next;
+    } while (!(current == start));   
+    if (tests) *tests = cnt;        
+    return H;
 }
