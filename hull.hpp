@@ -13,11 +13,11 @@ inline bool operator==(const Pt& a, const Pt& b) { return a.x == b.x && a.y == b
 // "lowest, then leftmost" order
 inline bool operator<(const Pt& a, const Pt& b) { return a.y < b.y || (a.y == b.y && a.x < b.x); }
 
-// TODO (Part 1): exact orientation test.
+// Part 1: exact orientation test.
 //  > 0 : a -> b -> c is a left (counter-clockwise) turn
 //  < 0 : right (clockwise) turn
 //  = 0 : collinear
-// Assume |x|, |y| <= 1e9. Is long long enough? Justify in your report.
+// With |x|, |y| <= 1e9 the result always fits in a long long (see report, question 1.1).
 inline long long orient(const Pt& a, const Pt& b, const Pt& c) {
     long long result = (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
     return result;
@@ -28,9 +28,9 @@ inline long long dist2(const Pt& a, const Pt& b) {
     return dx * dx + dy * dy;
 }
 
-// TODO (Part 1): Graham scan, O(n log n).
+// Part 1: Graham scan, O(n log n).
 std::vector<Pt> graham(std::vector<Pt> P);
 
-// TODO (Part 2): Jarvis march (gift wrapping), O(nh).
+// Part 2: Jarvis march (gift wrapping), O(nh).
 // If 'tests' is not null, store the number of orientation tests performed.
 std::vector<Pt> jarvis(std::vector<Pt> P, long long* tests = nullptr);

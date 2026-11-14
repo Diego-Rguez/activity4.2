@@ -1,6 +1,6 @@
 # Lab 4.3 · Convex Hulls in Practice (TC2038)
 
-Equipo: **<Integrante 1>** · **<Integrante 2>**  — Entrega: vie 13 nov 2026, 23:59
+Equipo: **Diego Rodríguez Sánchez (A01742085)** · **Omar Avila Meza (A01743547)**  — Entrega: vie 13 nov 2026, 23:59
 
 ## Compilar
 
